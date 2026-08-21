@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smile Creo | AI Dental Visualization Software</title>
+    <link rel="icon" type="image/svg+xml" href="logosc.svg">
     
     <!-- SEO & Meta Tags -->
     <meta name="description" content="Smile Creo uses advanced AI to visualize dental treatments instantly. See the results of braces, clear aligners, and implants chairside.">
@@ -102,7 +103,7 @@
             left: 50%;
             transform: translateX(-50%);
             height: 64px;
-            padding: 0 32px;
+            padding: 0 20px 0 28px;
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -112,7 +113,8 @@
             z-index: 100;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
+            gap: 24px;
             transition: transform 0.3s ease;
         }
 
@@ -121,14 +123,12 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.12);
         }
 
-
         .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-}
-
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
 
         /* --- Buttons --- */
         .btn-primary {
@@ -418,6 +418,11 @@
     <a href="#home" class="nav-logo">
         <img src="logosc.svg" alt="Smile Creo Logo" width="50" height="50">
     </a>
+    <!-- Call Now CTA Button -->
+    <a href="tel:6239287740" class="btn-primary" style="padding: 10px 20px 10px 24px; font-size: 12px; gap: 10px;">
+        Call Now
+        <div class="btn-icon" style="width: 26px; height: 26px; font-size: 11px;"><i class="bi bi-telephone-fill"></i></div>
+    </a>
 </nav>
 
     <!-- Immersive Hero Section -->
@@ -559,14 +564,10 @@
             </div>
 
             <div class="footer-bottom">
-                <div class="nav-logo">
-                    <!-- Footer Logo matching the header -->
-                    <svg viewBox="0 0 160 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="height: 24px;">
-                        <path d="M16 2C10.5 2 6 6.5 6 12C6 15 8 18 10 22C11 24 12 27 12 30H20C20 27 21 24 22 22C24 18 26 15 26 12C26 6.5 21.5 2 16 2Z" fill="#0B6F9C"/>
-                        <path d="M16 8C14 8 12 10 12 12C12 14.2 16 20 16 20C16 20 20 14.2 20 12C20 10 18 8 16 8Z" fill="#FFFFFF"/>
-                        <text x="36" y="24" font-family="'Playfair Display', serif" font-size="22" font-weight="700" fill="#0B6F9C">Smile Creo</text>
-                    </svg>
-                </div>
+                <a href="#home" class="nav-logo">
+                    <!-- Footer Logo matching the top navbar -->
+                    <img src="logosc.svg" alt="Smile Creo Logo" width="50" height="50">
+                </a>
                 <!-- Dynamic Year applied here via JS -->
                 <p>© <span id="currentYear"></span> Code in Black. Production-grade architecture. All rights reserved.</p>
                 <div class="flex gap-4">
