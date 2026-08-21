@@ -95,16 +95,15 @@
         .gap-4 { gap: 16px; }
         .gap-8 { gap: 32px; }
 
-        /* --- Floating Centered Navbar (Fully Responsive) --- */
+        /* --- Floating Centered Navbar (Fully Responsive & Fixed) --- */
         .navbar {
             position: fixed;
-            top: 16px;
+            top: 24px;
             left: 50%;
             transform: translateX(-50%);
-            width: calc(100% - 32px);
-            max-width: 1200px;
-            height: 64px;
-            padding: 0 20px 0 24px;
+            width: max-content; /* Shrinks to fit content, removing useless empty space */
+            max-width: calc(100% - 32px);
+            padding: 8px 8px 8px 24px; /* Balanced padding around logo and button */
             background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -114,8 +113,8 @@
             z-index: 1000;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 16px;
+            justify-content: center;
+            gap: 48px; /* Predictable, exact spacing between logo and CTA */
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -124,33 +123,32 @@
         }
 
         .nav-logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
+            display: block;
             text-decoration: none;
             flex-shrink: 0;
+            line-height: 0;
         }
 
         .nav-logo img {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             object-fit: contain;
-            flex-shrink: 0;
             display: block;
         }
 
         .nav-cta {
             white-space: nowrap;
             flex-shrink: 0;
-            padding: 10px 20px 10px 24px;
-            font-size: 13px;
-            gap: 10px;
+            margin: 0;
+            padding: 12px 20px 12px 24px;
+            font-size: 14px;
+            gap: 12px;
         }
 
         .nav-cta .btn-icon {
-            width: 28px;
-            height: 28px;
-            font-size: 12px;
+            width: 32px;
+            height: 32px;
+            font-size: 14px;
             flex-shrink: 0;
         }
 
@@ -420,24 +418,24 @@
 
         @media (max-width: 768px) {
             .navbar {
-                top: 12px;
-                width: calc(100% - 24px);
-                height: 56px;
-                padding: 0 12px 0 16px;
+                top: 16px;
+                width: max-content;
+                padding: 6px 6px 6px 20px;
+                gap: 24px;
             }
             .nav-logo img {
-                width: 36px;
-                height: 36px;
+                width: 32px;
+                height: 32px;
             }
             .nav-cta {
-                padding: 8px 14px 8px 18px;
-                font-size: 12px;
-                gap: 8px;
+                padding: 10px 16px 10px 20px;
+                font-size: 13px;
+                gap: 10px;
             }
             .nav-cta .btn-icon {
-                width: 24px;
-                height: 24px;
-                font-size: 11px;
+                width: 28px;
+                height: 28px;
+                font-size: 12px;
             }
             
             .hero {
@@ -501,7 +499,7 @@
         <div class="pill pill-2 parallax-el" data-speed="-0.03">Chairside Visualization</div>
         <div class="pill pill-3 parallax-el" data-speed="0.07">Millisecond Processing</div>
 
-        <div class="container" style="width: 100%;">
+        <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title gs-reveal-text">
                     Visualize the <br>
