@@ -121,16 +121,20 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.12);
         }
 
+
         .nav-logo {
-            display: flex;
-            align-items: center;
-            height: 100%;
-        }
-        
-        .nav-logo svg {
-            height: 32px;
-            width: auto;
-        }
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #0B6F9C;
+}
 
         /* --- Buttons --- */
         .btn-primary {
@@ -414,14 +418,14 @@
 </head>
 <body>
 
-    <!-- Floating Centered Navigation -->
-    <nav class="navbar gs-fade-down">
-        <!-- SVG Logo pointing to top of page -->
-        <a href="#home" class="nav-logo">
-<img src="logosc.svg" width="20px"></img>
-                <text x="36" y="24" font-family="'Playfair Display', serif" font-size="24" font-weight="700" fill="#0B6F9C">Smile Creo</text>
-        </a>
-    </nav>
+<!-- Floating Centered Navigation -->
+<nav class="navbar gs-fade-down">
+    <!-- SVG Logo pointing to top of page -->
+    <a href="#home" class="nav-logo">
+        <img src="logosc.svg" alt="Smile Creo Logo" width="50" height="50">
+        <span class="logo-text">Smile Creo</span>
+    </a>
+</nav>
 
     <!-- Immersive Hero Section -->
     <section id="home" class="hero">
