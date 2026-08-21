@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smile Creo | AI Dental Visualization Software</title>
+    
+    <!-- SEO & Meta Tags -->
+    <meta name="description" content="Smile Creo uses advanced AI to visualize dental treatments instantly. See the results of braces, clear aligners, and implants chairside.">
+    <meta name="author" content="Code in Black">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+    <!-- GSAP for Peak Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Custom CSS (No Tailwind) -->
+    <style>
+        :root {
+            /* Brand Colors */
+            --c-white: #FFFFFF;
+            --c-bg: #FAFAFC;
+            --c-purple: #F4C8F2;
+            --c-yellow: #FFFBA0;
+            --c-navy: #202A57;
+            --c-blue: #0B6F9C;
+            --c-pink: #F08BBE;
+            --c-periwinkle: #B8BCE8;
+            
+            /* Typography */
+            --font-serif: 'Playfair Display', serif;
+            --font-sans: 'DM Sans', sans-serif;
+            
+            /* Spacing & Layout */
+            --container-max: 1400px;
+            --section-pad: 120px 24px;
+            --radius-md: 24px;
+            --radius-lg: 40px;
+            --radius-pill: 999px;
+        }
+
+        /* --- Reset & Base --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--c-bg);
+            color: #111;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, .font-serif {
+            font-family: var(--font-serif);
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* --- Layout Utility --- */
+        .container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        .section { padding: 100px 0; }
+        
+        .grid { display: grid; gap: 24px; }
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-12 { grid-template-columns: repeat(12, 1fr); }
+        
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .flex-col { flex-direction: column; }
+        .gap-4 { gap: 16px; }
+        .gap-8 { gap: 32px; }
+
+        /* --- Floating Centered Navbar --- */
+        .navbar {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 64px;
+            padding: 0 32px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: var(--radius-pill);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar:hover {
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        
+        .nav-logo svg {
+            height: 32px;
+            width: auto;
+        }
+
+        /* --- Buttons --- */
+        .btn-primary {
+            background-color: var(--c-navy);
+            color: var(--c-white);
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            padding: 16px 24px 16px 32px;
+            border-radius: var(--radius-pill);
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 10px 30px -10px rgba(32, 42, 87, 0.4);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px -15px rgba(32, 42, 87, 0.6);
+            background-color: #161d3c;
+        }
+        .btn-icon {
+            background-color: var(--c-white);
+            color: var(--c-navy);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.4s ease;
+        }
+        .btn-primary:hover .btn-icon { transform: translateX(4px); }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background-color: #000;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+            transform: scale(1.1); /* Animated by GSAP */
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 600px;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            line-height: 1.05;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+        .hero-title .italic { color: var(--c-blue); font-style: italic; }
+        
+        .hero-desc {
+            font-size: 18px;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        /* Floating Pills (Mouse Parallax via GSAP) */
+        .pill {
+            position: absolute;
+            padding: 10px 20px;
+            border-radius: var(--radius-pill);
+            font-size: 13px;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 20;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.4);
+        }
+        .pill-1 { top: 25%; right: 15%; background: rgba(184, 188, 232, 0.9); transform: rotate(5deg); }
+        .pill-2 { bottom: 30%; right: 25%; background: rgba(255, 251, 160, 0.9); transform: rotate(-8deg); }
+        .pill-3 { top: 50%; right: 10%; background: rgba(240, 139, 190, 0.9); color: white; transform: rotate(12deg); }
+
+        /* --- Bento Grid Section --- */
+        .bento-section {
+            background: var(--c-white);
+            border-radius: var(--radius-lg);
+            margin: 40px 24px;
+            padding: 80px 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+            max-width: 600px;
+        }
+        .section-title {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            margin-bottom: 16px;
+        }
+        .section-subtitle {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .bento-card {
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0,0,0,0.05);
+            min-height: 350px;
+        }
+
+        .bento-large {
+            grid-column: span 1;
+            grid-row: span 2;
+        }
+
+        .bento-content {
+            padding: 32px;
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+        .bento-content h3 { font-size: 28px; margin-bottom: 12px; }
+        .bento-content p { font-size: 13px; opacity: 0.8; line-height: 1.5; }
+
+        .bento-img-container {
+            flex-grow: 1;
+            position: relative;
+            min-height: 200px;
+            overflow: hidden;
+        }
+        .bento-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s ease;
+        }
+        .bento-card:hover .bento-img-container img { transform: scale(1.05); }
+        .img-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
+        }
+
+        .bento-small-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        .bento-small {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            text-align: center;
+            min-height: auto;
+        }
+        .bento-icon {
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 16px;
+            font-size: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* --- Testimonial Section --- */
+        .testimonial-box {
+            background: var(--c-white);
+            border-radius: var(--radius-lg);
+            padding: 40px;
+            border: 1px solid rgba(0,0,0,0.05);
+            align-items: center;
+        }
+        .test-content {
+            padding-right: 40px;
+        }
+        .test-quote {
+            font-size: 22px;
+            line-height: 1.5;
+            color: #333;
+            margin-bottom: 24px;
+            font-family: var(--font-serif);
+        }
+        .test-author { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+        .test-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #888; }
+        
+        .test-img-wrapper {
+            position: relative;
+            height: 400px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+        }
+        .test-img-wrapper img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .test-cta-overlay {
+            position: absolute;
+            bottom: 24px; right: 24px;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background: var(--c-white);
+            padding: 80px 0 40px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        .legal-grid { margin-bottom: 60px; }
+        .legal-box {
+            background: var(--c-bg);
+            padding: 32px;
+            border-radius: var(--radius-md);
+        }
+        .legal-box h4 {
+            font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .legal-box p { font-size: 12px; color: #666; margin-bottom: 12px; line-height: 1.5; }
+        .footer-bottom {
+            display: flex; justify-content: space-between; align-items: center;
+            padding-top: 32px; border-top: 1px solid rgba(0,0,0,0.05);
+            font-size: 12px; color: #888;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+            .bento-large { grid-column: span 1; }
+            .grid-12 { grid-template-columns: 1fr; }
+            .test-content { padding-right: 0; margin-bottom: 32px; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-overlay { background: linear-gradient(to top, rgba(255,255,255,1) 10%, rgba(255,255,255,0.7) 60%, transparent 100%); }
+            .hero-content { margin-top: auto; padding-bottom: 60px; text-align: center; }
+            .hero-content .btn-primary { margin: 0 auto; }
+            
+            .pill { display: none; } /* Hide parallax pills on mobile for cleaner look */
+            
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .bento-section { margin: 20px 12px; padding: 40px 20px; }
+            
+            .bento-small-stack { gap: 24px; }
+            .bento-small { padding: 40px 20px; }
+            
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+        }
+
+        /* GSAP Text Reveal Utility Class */
+        .split-line { overflow: hidden; }
+        .split-line span { display: block; }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Centered Navigation -->
+    <nav class="navbar gs-fade-down">
+        <!-- SVG Logo pointing to top of page -->
+        <a href="#home" class="nav-logo">
+            <svg viewBox="0 0 160 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 2C10.5 2 6 6.5 6 12C6 15 8 18 10 22C11 24 12 27 12 30H20C20 27 21 24 22 22C24 18 26 15 26 12C26 6.5 21.5 2 16 2Z" fill="#0B6F9C"/>
+                <path d="M16 8C14 8 12 10 12 12C12 14.2 16 20 16 20C16 20 20 14.2 20 12C20 10 18 8 16 8Z" fill="#FFFFFF"/>
+                <text x="36" y="24" font-family="'Playfair Display', serif" font-size="24" font-weight="700" fill="#0B6F9C">Smile Creo</text>
+            </svg>
+        </a>
+    </nav>
+
+    <!-- Immersive Hero Section -->
+    <section id="home" class="hero">
+        <img src="https://images.unsplash.com/photo-1677026010083-78ec7f1b84ed?q=80&w=1470&auto=format&fit=crop" alt="Dental Clinic Background" class="hero-bg" id="heroBg">
+        <div class="hero-overlay"></div>
+
+        <!-- Mouse Parallax Pills -->
+        <div class="pill pill-1 parallax-el" data-speed="0.05">✦ Photorealistic AI</div>
+        <div class="pill pill-2 parallax-el" data-speed="-0.03">Chairside Visualization</div>
+        <div class="pill pill-3 parallax-el" data-speed="0.07">Millisecond Processing</div>
+
+        <div class="container" style="width: 100%;">
+            <div class="hero-content">
+                <h1 class="hero-title gs-reveal-text">
+                    Visualize the <br>
+                    <span class="italic">Perfect Smile.</span><br>
+                    Instantly.
+                </h1>
+                <p class="hero-desc gs-reveal-fade">
+                    Upload a patient photo, select the treatment, and let our proprietary AI generate hyper-realistic post-treatment images for braces, aligners, and implants in seconds.
+                </p>
+                <div class="gs-reveal-fade">
+                    <!-- Pointing to Phone Number CTA as requested -->
+                    <a href="tel:6239287740" class="btn-primary">
+                        Call Now
+                        <div class="btn-icon"><i class="bi bi-arrow-right"></i></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core AI Capabilities (Bento Grid) -->
+    <section id="platform" class="bento-section">
+        <div class="section-header gs-fade-up">
+            <h2 class="section-title font-serif">AI <span style="font-style: italic; color: var(--c-blue);">treatment</span> visualizations</h2>
+            <p class="section-subtitle">One platform, limitless possibilities. Our neural network is trained on millions of clinical outcomes to ensure medical accuracy across all major dental procedures.</p>
+        </div>
+
+        <div class="grid grid-3">
+            
+            <!-- Clear Aligners -->
+            <div class="bento-card bento-large gs-stagger-card" style="background: linear-gradient(to bottom, var(--c-purple), #fdf2fc);">
+                <div class="bento-content">
+                    <h3 class="font-serif">Clear Aligners</h3>
+                    <p>Simulate the exact progression of clear aligner treatments with morphing technology.</p>
+                </div>
+                <div class="bento-img-container">
+                    <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?q=80&w=1470&auto=format&fit=crop" alt="Clear Aligners">
+                    <div class="img-gradient"></div>
+                </div>
+            </div>
+
+            <!-- Braces -->
+            <div class="bento-card bento-large gs-stagger-card" style="background: linear-gradient(to bottom, var(--c-periwinkle), #eef0ff);">
+                <div class="bento-content">
+                    <h3 class="font-serif">Orthodontic Braces</h3>
+                    <p>Visualize traditional bracket and wire outcomes, adjusting for bite correction.</p>
+                </div>
+                <div class="bento-img-container">
+                    <img src="https://images.unsplash.com/photo-1656514894252-fb336a3ad6a6?q=80&w=1470&auto=format&fit=crop" alt="Braces">
+                    <div class="img-gradient"></div>
+                </div>
+            </div>
+
+            <!-- Stacked Cards -->
+            <div class="bento-small-stack">
+                <!-- Whitening -->
+                <div class="bento-card bento-small gs-stagger-card" style="background: var(--c-yellow);">
+                    <div class="bento-icon" style="color: #d4af37;"><i class="bi bi-stars"></i></div>
+                    <h3 class="font-serif" style="font-size: 24px; margin-bottom: 8px;">Teeth Whitening</h3>
+                    <p style="font-size: 12px; color: #555;">Adjust shade guides dynamically to show realistic bleaching results.</p>
+                </div>
+                <!-- Implants -->
+                <div class="bento-card bento-small gs-stagger-card" style="background: var(--c-pink); color: white;">
+                    <div class="bento-icon" style="color: white;"><i class="bi bi-bandaid"></i></div>
+                    <h3 class="font-serif" style="font-size: 24px; margin-bottom: 8px;">Dental Implants</h3>
+                    <p style="font-size: 12px; color: rgba(255,255,255,0.9);">Seamlessly render missing teeth replacements matching natural anatomy.</p>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Professional Trust Section -->
+    <section id="accuracy" class="section">
+        <div class="container">
+            <div class="grid grid-12 testimonial-box gs-fade-up">
+                
+                <!-- Text Content -->
+                <div class="test-content" style="grid-column: span 5;">
+                    <i class="bi bi-quote" style="font-size: 48px; color: var(--c-blue); line-height: 1;"></i>
+                    <p class="test-quote">
+                        "Smile Creo bridges the gap between clinical terminology and patient understanding. Showing patients their future smile chairside removes hesitation instantly. It's the most powerful consultation tool for both patients and dental professionals."
+                    </p>
+                    <div class="test-author">Mr. Gurjot Singh</div>
+                    <div class="test-title">Senior Web Developer, Code in Black</div>
+                </div>
+
+                <!-- Image Content -->
+                <div class="test-img-wrapper" style="grid-column: span 7;">
+                    <img src="https://images.unsplash.com/photo-1489278353717-f64c6ee8a4d2?q=80&w=1470&auto=format&fit=crop" alt="Mr. Gurjot Singh Workspace" id="parallaxImg">
+                    
+                    <div class="test-cta-overlay">
+                        <!-- Pointing to Phone Number CTA as requested -->
+                        <a href="tel:6239287740" class="btn-primary" style="background: white; color: var(--c-navy);">
+                            Join Now
+                            <div class="btn-icon" style="background: var(--c-navy); color: white;"><i class="bi bi-telephone-fill"></i></div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="grid grid-2 legal-grid gs-fade-up">
+                
+                <!-- Privacy -->
+                <div class="legal-box">
+                    <h4><i class="bi bi-shield-check"></i> Privacy Policy</h4>
+                    <p><strong>1. Data Collection:</strong> Smile Creo collects patient images strictly for generating visual simulations securely.</p>
+                    <p><strong>2. Compliance:</strong> Our infrastructure complies with healthcare data regulations. Images are encrypted in transit and at rest.</p>
+                    <p><strong>3. Third-Party:</strong> We do not sell, trade, or transfer personal health information to outside parties under any circumstance.</p>
+                </div>
+
+                <!-- Terms -->
+                <div class="legal-box">
+                    <h4><i class="bi bi-file-earmark-text"></i> Terms & Conditions</h4>
+                    <p><strong>1. Acceptance:</strong> By using the Smile Creo software, you agree to these terms. For professional dental use only.</p>
+                    <p><strong>2. Disclaimer:</strong> AI-generated images are simulations and do not guarantee actual clinical results.</p>
+                    <p><strong>3. Consent:</strong> Users are responsible for obtaining appropriate patient consent before uploading images.</p>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <div class="nav-logo">
+                    <!-- Footer Logo matching the header -->
+                    <svg viewBox="0 0 160 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="height: 24px;">
+                        <path d="M16 2C10.5 2 6 6.5 6 12C6 15 8 18 10 22C11 24 12 27 12 30H20C20 27 21 24 22 22C24 18 26 15 26 12C26 6.5 21.5 2 16 2Z" fill="#0B6F9C"/>
+                        <path d="M16 8C14 8 12 10 12 12C12 14.2 16 20 16 20C16 20 20 14.2 20 12C20 10 18 8 16 8Z" fill="#FFFFFF"/>
+                        <text x="36" y="24" font-family="'Playfair Display', serif" font-size="22" font-weight="700" fill="#0B6F9C">Smile Creo</text>
+                    </svg>
+                </div>
+                <!-- Dynamic Year applied here via JS -->
+                <p>© <span id="currentYear"></span> Code in Black. Production-grade architecture. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <!-- Pointing Footer links to call CTA as requested -->
+                    <a href="tel:6239287740" style="font-weight: 600; transition: color 0.3s;" onmouseover="this.style.color='#0B6F9C'" onmouseout="this.style.color='#888'">Platform Demo</a>
+                    <a href="tel:6239287740" style="font-weight: 600; transition: color 0.3s;" onmouseover="this.style.color='#0B6F9C'" onmouseout="this.style.color='#888'">Pricing</a>
+                    <a href="tel:6239287740" style="font-weight: 600; transition: color 0.3s;" onmouseover="this.style.color='#0B6F9C'" onmouseout="this.style.color='#888'">Support</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP Animation & Logic -->
+    <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Set Dynamic Copyright Year
+            document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+            // Navbar Entrance Animation
+            gsap.from(".gs-fade-down", {
+                y: -50,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out",
+                delay: 0.2
+            });
+
+            // Hero Animations
+            // Background Image Scale
+            gsap.fromTo("#heroBg", 
+                { scale: 1.2, opacity: 0 }, 
+                { scale: 1, opacity: 0.7, duration: 2.5, ease: "power3.out" }
+            );
+
+            // Simple Custom Text Splitter for Hero Title
+            const title = document.querySelector('.gs-reveal-text');
+            const textContent = title.innerHTML;
+            // Wrap lines in spans for animation
+            title.innerHTML = textContent.split('<br>').map(line => `<span class="split-line"><span>${line}</span></span>`).join('');
+            
+            const lines = title.querySelectorAll('.split-line span');
+            
+            // Hero Timeline
+            const tl = gsap.timeline({ delay: 0.5 });
+            tl.from(lines, {
+                y: 100,
+                opacity: 0,
+                duration: 1,
+                stagger: 0.15,
+                ease: "power4.out"
+            })
+            .from('.gs-reveal-fade', {
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.2,
+                ease: "power2.out"
+            }, "-=0.5")
+            .from('.pill', {
+                scale: 0,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: "back.out(1.5)"
+            }, "-=0.8");
+
+            // Mouse Parallax for Floating Pills (Follow and Fly effect)
+            document.addEventListener("mousemove", (e) => {
+                const x = (window.innerWidth - e.pageX * 2) / 100;
+                const y = (window.innerHeight - e.pageY * 2) / 100;
+
+                document.querySelectorAll('.parallax-el').forEach(el => {
+                    const speed = el.getAttribute('data-speed');
+                    gsap.to(el, {
+                        x: x * speed * 100,
+                        y: y * speed * 100,
+                        duration: 1,
+                        ease: "power1.out"
+                    });
+                });
+            });
+
+            // Scroll Animations (ScrollTrigger)
+            
+            // Standard Fade Up
+            gsap.utils.toArray('.gs-fade-up').forEach(element => {
+                gsap.from(element, {
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    ease: "power3.out"
+                });
+            });
+
+            // Bento Grid Stagger
+            gsap.from('.gs-stagger-card', {
+                scrollTrigger: {
+                    trigger: ".bento-section",
+                    start: "top 75%",
+                },
+                y: 60,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "power3.out"
+            });
+
+            // Image Parallax Effect in Testimonial
+            gsap.to("#parallaxImg", {
+                scrollTrigger: {
+                    trigger: ".testimonial-box",
+                    start: "top bottom",
+                    end: "bottom top",
+                    scrub: true
+                },
+                y: 50,
+                scale: 1.1,
+                ease: "none"
+            });
+        });
+    </script>
+</body>
+</html>
