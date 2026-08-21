@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smile Creo | AI Dental Visualization Software</title>
-    <link rel="icon" type="image/svg+xml" href="logosc.svg">
     
     <!-- SEO & Meta Tags -->
     <meta name="description" content="Smile Creo uses advanced AI to visualize dental treatments instantly. See the results of braces, clear aligners, and implants chairside.">
@@ -22,7 +21,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-    <!-- Custom CSS (No Tailwind) -->
+    <!-- Custom CSS -->
     <style>
         :root {
             /* Brand Colors */
@@ -96,38 +95,63 @@
         .gap-4 { gap: 16px; }
         .gap-8 { gap: 32px; }
 
-        /* --- Floating Centered Navbar --- */
+        /* --- Floating Centered Navbar (Fully Responsive) --- */
         .navbar {
             position: fixed;
-            top: 15px;
+            top: 16px;
             left: 50%;
             transform: translateX(-50%);
+            width: calc(100% - 32px);
+            max-width: 1200px;
             height: 64px;
-            padding: 0 20px 0 28px;
-            background: rgba(255, 255, 255, 0.85);
+            padding: 0 20px 0 24px;
+            background: rgba(255, 255, 255, 0.88);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.4);
+            border: 1px solid rgba(255, 255, 255, 0.6);
             border-radius: var(--radius-pill);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 24px;
-            transition: transform 0.3s ease;
+            gap: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .navbar:hover {
-            transform: translateX(-50%) translateY(-2px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
         }
 
         .nav-logo {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 12px;
             text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .nav-logo img {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            flex-shrink: 0;
+            display: block;
+        }
+
+        .nav-cta {
+            white-space: nowrap;
+            flex-shrink: 0;
+            padding: 10px 20px 10px 24px;
+            font-size: 13px;
+            gap: 10px;
+        }
+
+        .nav-cta .btn-icon {
+            width: 28px;
+            height: 28px;
+            font-size: 12px;
+            flex-shrink: 0;
         }
 
         /* --- Buttons --- */
@@ -144,8 +168,9 @@
             gap: 16px;
             box-shadow: 0 10px 30px -10px rgba(32, 42, 87, 0.4);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             cursor: pointer;
+            white-space: nowrap;
         }
         .btn-primary:hover {
             transform: translateY(-2px);
@@ -168,12 +193,13 @@
         /* --- Hero Section --- */
         .hero {
             position: relative;
-            height: 100vh;
-            min-height: 700px;
+            min-height: 100vh;
+            min-height: 100svh;
             display: flex;
             align-items: center;
             overflow: hidden;
             background-color: #000;
+            padding: 120px 0 80px;
         }
         
         .hero-bg {
@@ -183,37 +209,37 @@
             height: 100%;
             object-fit: cover;
             opacity: 0.7;
-            transform: scale(1.1); /* Animated by GSAP */
+            transform: scale(1.1);
         }
 
         .hero-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to right, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.6) 50%, transparent 100%);
+            background: linear-gradient(to right, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.65) 55%, transparent 100%);
         }
 
         .hero-content {
             position: relative;
             z-index: 10;
-            max-width: 600px;
+            max-width: 620px;
         }
 
         .hero-title {
-            font-size: clamp(3rem, 6vw, 5.5rem);
-            line-height: 1.05;
+            font-size: clamp(2.4rem, 5.5vw, 5.2rem);
+            line-height: 1.08;
             margin-bottom: 24px;
             letter-spacing: -0.02em;
         }
         .hero-title .italic { color: var(--c-blue); font-style: italic; }
         
         .hero-desc {
-            font-size: 18px;
+            font-size: 17px;
             color: #444;
             line-height: 1.6;
-            margin-bottom: 40px;
+            margin-bottom: 36px;
         }
 
-        /* Floating Pills (Mouse Parallax via GSAP) */
+        /* Floating Pills */
         .pill {
             position: absolute;
             padding: 10px 20px;
@@ -246,7 +272,7 @@
             max-width: 600px;
         }
         .section-title {
-            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
             margin-bottom: 16px;
         }
         .section-subtitle {
@@ -379,30 +405,70 @@
             display: flex; justify-content: space-between; align-items: center;
             padding-top: 32px; border-top: 1px solid rgba(0,0,0,0.05);
             font-size: 12px; color: #888;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
-        /* --- Responsive Design --- */
+        /* --- Responsive Queries --- */
         @media (max-width: 992px) {
             .grid-3 { grid-template-columns: repeat(2, 1fr); }
             .bento-large { grid-column: span 1; }
             .grid-12 { grid-template-columns: 1fr; }
-            .test-content { padding-right: 0; margin-bottom: 32px; }
+            .test-content { grid-column: span 12 !important; padding-right: 0; margin-bottom: 32px; }
+            .test-img-wrapper { grid-column: span 12 !important; height: 350px; }
         }
 
         @media (max-width: 768px) {
-            .hero-overlay { background: linear-gradient(to top, rgba(255,255,255,1) 10%, rgba(255,255,255,0.7) 60%, transparent 100%); }
-            .hero-content { margin-top: auto; padding-bottom: 60px; text-align: center; }
-            .hero-content .btn-primary { margin: 0 auto; }
+            .navbar {
+                top: 12px;
+                width: calc(100% - 24px);
+                height: 56px;
+                padding: 0 12px 0 16px;
+            }
+            .nav-logo img {
+                width: 36px;
+                height: 36px;
+            }
+            .nav-cta {
+                padding: 8px 14px 8px 18px;
+                font-size: 12px;
+                gap: 8px;
+            }
+            .nav-cta .btn-icon {
+                width: 24px;
+                height: 24px;
+                font-size: 11px;
+            }
             
-            .pill { display: none; } /* Hide parallax pills on mobile for cleaner look */
+            .hero {
+                padding-top: 110px;
+                padding-bottom: 60px;
+                min-height: auto;
+            }
+            .hero-overlay {
+                background: linear-gradient(to top, rgba(255,255,255,0.98) 35%, rgba(255,255,255,0.8) 70%, rgba(255,255,255,0.4) 100%);
+            }
+            .hero-content {
+                text-align: left;
+                max-width: 100%;
+            }
+            .hero-desc {
+                font-size: 15px;
+            }
+            
+            .pill { display: none; }
             
             .grid-2, .grid-3 { grid-template-columns: 1fr; }
             .bento-section { margin: 20px 12px; padding: 40px 20px; }
+            .bento-small-stack { gap: 20px; }
+            .bento-small { padding: 32px 20px; }
             
-            .bento-small-stack { gap: 24px; }
-            .bento-small { padding: 40px 20px; }
-            
-            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+                justify-content: center;
+            }
         }
 
         /* GSAP Text Reveal Utility Class */
@@ -414,14 +480,14 @@
 
 <!-- Floating Centered Navigation -->
 <nav class="navbar gs-fade-down">
-    <!-- SVG Logo pointing to top of page -->
+    <!-- SVG Logo -->
     <a href="#home" class="nav-logo">
-        <img src="logosc.svg" alt="Smile Creo Logo" width="50" height="50">
+        <img src="logosc.svg" alt="Smile Creo Logo">
     </a>
     <!-- Call Now CTA Button -->
-    <a href="tel:6239287740" class="btn-primary" style="padding: 10px 20px 10px 24px; font-size: 12px; gap: 10px;">
+    <a href="tel:6239287740" class="btn-primary nav-cta">
         Call Now
-        <div class="btn-icon" style="width: 26px; height: 26px; font-size: 11px;"><i class="bi bi-telephone-fill"></i></div>
+        <div class="btn-icon"><i class="bi bi-telephone-fill"></i></div>
     </a>
 </nav>
 
@@ -446,7 +512,6 @@
                     Upload a patient photo, select the treatment, and let our proprietary AI generate hyper-realistic post-treatment images for braces, aligners, and implants in seconds.
                 </p>
                 <div class="gs-reveal-fade">
-                    <!-- Pointing to Phone Number CTA as requested -->
                     <a href="tel:6239287740" class="btn-primary">
                         Call Now
                         <div class="btn-icon"><i class="bi bi-arrow-right"></i></div>
@@ -528,7 +593,6 @@
                     <img src="https://images.unsplash.com/photo-1489278353717-f64c6ee8a4d2?q=80&w=1470&auto=format&fit=crop" alt="Mr. Gurjot Singh Workspace" id="parallaxImg">
                     
                     <div class="test-cta-overlay">
-                        <!-- Pointing to Phone Number CTA as requested -->
                         <a href="tel:6239287740" class="btn-primary" style="background: white; color: var(--c-navy);">
                             Join Now
                             <div class="btn-icon" style="background: var(--c-navy); color: white;"><i class="bi bi-telephone-fill"></i></div>
@@ -566,12 +630,10 @@
             <div class="footer-bottom">
                 <a href="#home" class="nav-logo">
                     <!-- Footer Logo matching the top navbar -->
-                    <img src="logosc.svg" alt="Smile Creo Logo" width="50" height="50">
+                    <img src="logosc.svg" alt="Smile Creo Logo">
                 </a>
-                <!-- Dynamic Year applied here via JS -->
                 <p>© <span id="currentYear"></span> Code in Black. Production-grade architecture. All rights reserved.</p>
                 <div class="flex gap-4">
-                    <!-- Pointing Footer links to call CTA as requested -->
                     <a href="tel:6239287740" style="font-weight: 600; transition: color 0.3s;" onmouseover="this.style.color='#0B6F9C'" onmouseout="this.style.color='#888'">Platform Demo</a>
                     <a href="tel:6239287740" style="font-weight: 600; transition: color 0.3s;" onmouseover="this.style.color='#0B6F9C'" onmouseout="this.style.color='#888'">Pricing</a>
                     <a href="tel:6239287740" style="font-weight: 600; transition: color 0.3s;" onmouseover="this.style.color='#0B6F9C'" onmouseout="this.style.color='#888'">Support</a>
@@ -598,16 +660,14 @@
             });
 
             // Hero Animations
-            // Background Image Scale
             gsap.fromTo("#heroBg", 
                 { scale: 1.2, opacity: 0 }, 
                 { scale: 1, opacity: 0.7, duration: 2.5, ease: "power3.out" }
             );
 
-            // Simple Custom Text Splitter for Hero Title
+            // Custom Text Splitter for Hero Title
             const title = document.querySelector('.gs-reveal-text');
             const textContent = title.innerHTML;
-            // Wrap lines in spans for animation
             title.innerHTML = textContent.split('<br>').map(line => `<span class="split-line"><span>${line}</span></span>`).join('');
             
             const lines = title.querySelectorAll('.split-line span');
@@ -636,7 +696,7 @@
                 ease: "back.out(1.5)"
             }, "-=0.8");
 
-            // Mouse Parallax for Floating Pills (Follow and Fly effect)
+            // Mouse Parallax for Floating Pills
             document.addEventListener("mousemove", (e) => {
                 const x = (window.innerWidth - e.pageX * 2) / 100;
                 const y = (window.innerHeight - e.pageY * 2) / 100;
@@ -652,8 +712,6 @@
                 });
             });
 
-            // Scroll Animations (ScrollTrigger)
-            
             // Standard Fade Up
             gsap.utils.toArray('.gs-fade-up').forEach(element => {
                 gsap.from(element, {
